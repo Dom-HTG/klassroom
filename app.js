@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const connectDB = require('./helpers/database');
 const authRoutes = require('./routes/authRoutes');
+const validateInput = require('./helpers/validate');
 
 const app = express();
 
@@ -12,6 +13,9 @@ app.use(express.json());
 
 // Midlleware to encode url format.
 app.use(express.urlencoded({ extended: true }));
+
+// Custom Middlewares.
+
 
 //Initialize new datavbase connection.
 connectDB();
