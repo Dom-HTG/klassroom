@@ -4,9 +4,9 @@ const ApiError = require('../errors/apierror');
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 // newToken() creates a new JWT.
-const newToken = async (id, email, firstName, lastName) => {
+const newToken = async (id, email) => {
     const token = jwt.sign(
-        {id, email, firstName, lastName},
+        {id, email},
         TOKEN_SECRET,
         { expiresIn: '1h' }
     );

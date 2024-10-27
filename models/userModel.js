@@ -38,7 +38,7 @@ userSchema.pre('save', async function (next) {
     // Check if user has been modified.
     if (user.isModified("password")) {
         const salt = bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(user.password, salt);
+        const hash = bcrypt.hash(user.password, salt);
         use.password = hash;
     }
 
@@ -47,3 +47,5 @@ userSchema.pre('save', async function (next) {
 })
 
 const UserModel = mongoose.model('User', userSchema);
+
+module.exports = UserModel;
