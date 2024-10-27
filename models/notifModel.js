@@ -16,6 +16,13 @@ const NotifSchema = mongoose.Schema({
             required: true
         }
     ], 
+    usersID: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        }
+    ],
     status: { // PENDING || SUCCESS || FAILED
         type: string,
         required: true
