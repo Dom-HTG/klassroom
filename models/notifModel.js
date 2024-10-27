@@ -24,7 +24,7 @@ const NotifSchema = mongoose.Schema({
         type: string,
         required: true
     }
-});
+}, { timestamps: true });
 
 const NotifModel = mongoose.model('Notification', NotifSchema);
 

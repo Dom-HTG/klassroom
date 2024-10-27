@@ -28,7 +28,21 @@ const userSchema =  Schema({
     avatar: {
         type: String,
         required: false
-    }
+    }, 
+    groups: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Group',
+            required: true
+        }
+    ], 
+    notifications: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Notification',
+            required: false
+        }
+    ]
 }, { timestamps: true });
 
 // Use pre-save hook to hash user password before saving to database only if use hasn't been been modified.

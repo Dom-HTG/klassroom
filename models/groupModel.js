@@ -12,7 +12,7 @@ const groupSchema = mongoose.Schema({
         type: string,
         required: true
     }
-});
+}, { timestamps: true });
 
 const GroupModel = mongoose.Schema('Group', groupSchema);
 
