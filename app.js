@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const connectDB = require('./helpers/database');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -14,5 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 
 //Initialize new datavbase connection.
 connectDB();
+
+// Routes for authentication (register/login)
+app.use('/auth', authRoutes);
+
+//Routes for user CRUD
+// app.use();
 
 app.listen(PORT, () => console.log(`Klassroom server is listening on port: ${PORT}`));

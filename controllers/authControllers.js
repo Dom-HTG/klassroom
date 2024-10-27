@@ -17,15 +17,6 @@ class User {
     }
 }
 
-// LoginUser class will be used to construct an object for Login controller.
-class LoginUser {
-
-    constructor(email, password) {
-        this.email = email;
-        this.password = password;
-    }
-}
-
 // Register is a controller that will be used to register users and store their data in the database.
 const Register = async (req, res) => {
     try {
@@ -37,18 +28,21 @@ const Register = async (req, res) => {
         }
 
         // Check if the user already exists in the database(registered).
-        const registeredUser = await UserModel.find({ email: email }); // this will return the user object if a user exists with the passed in email address.
+        const registeredUser = await UserModel.findOne({ email: email }); // this will return the user object if a user exists with the passed in email address.
 
         if (registeredUser) {
             throw new ApiError('User with this email already exists', 400);
         }
 
         // New user.
-        const user = new User(firstName, lastName, email, phone, password, avatar);
-        const savedUser = await UserModel.create(user);
+        const user = new UserModel({
+            firstName, lastName, email, phone, password, avatar
+        });
+
+        const savedUser = await user.save();
 
         // Create new JWT.
-        const token = newToken(savedUser._id, email);
+        const token = newToken(savedUser._id, savedUser.email);
 
         return res.status(201).json({
             message: 'User registered successfully',
@@ -64,8 +58,8 @@ const Register = async (req, res) => {
     } catch (e) {
         console.error(e.message);
 
-        const statusCode = err.status || 500;
-        const message = err.message || "Internal Server Error";
+        const statusCode = e.status || 500;
+        const message = e.message || "Internal Server Error";
 
         return res.status(statusCode).json({ err_message: message });
     }
@@ -112,8 +106,8 @@ const Login = async (req, res) => {
     } catch (e) {
         console.error(e.message);
 
-        const statusCode = err.status || 500;
-        const message = err.message || "Internal Server Error";
+        const statusCode = e.status || 500;
+        const message = e.message || "Internal Server Error";
 
         return res.status(statusCode).json({ err_message: message });
     }
